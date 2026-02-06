@@ -1,5 +1,6 @@
 /* ============================================
    Management Diagnostic - Quiz Logic & Scoring
+   Yes/No format, 4 categories, 5 questions each
    ============================================ */
 
 (function () {
@@ -8,10 +9,10 @@
   // ---- State ----
   let quizData = null;
   let currentQuestionIndex = 0;
-  let answers = []; // { categoryId, questionIndex, score }
+  let answers = []; // score per question (10 or 0)
   let totalQuestions = 0;
-  let flatQuestions = []; // [{ categoryId, categoryName, questionIndex, text, options }]
-  let teamSize = '';
+  let flatQuestions = []; // [{ categoryId, categoryName, questionIndex, text }]
+  let businessInfoAnswers = {}; // { 'team-size': '6-15', 'revenue': { text, score }, ... }
   let userData = { name: '', email: '', company: '' };
 
   // ---- DOM refs ----
@@ -25,7 +26,7 @@
   const btnBack = document.getElementById('btn-back');
   const btnRetake = document.getElementById('btn-retake');
   const emailForm = document.getElementById('email-form');
-  const teamSizeContainer = document.getElementById('team-size-options');
+  const businessInfoContainer = document.getElementById('business-info-container');
 
   const questionCounter = document.getElementById('question-counter');
   const categoryLabel = document.getElementById('category-label');
@@ -41,7 +42,7 @@
       const response = await fetch('data/questions.json');
       quizData = await response.json();
       buildFlatQuestions();
-      setupTeamSizeOptions();
+      setupBusinessInfo();
       setupEventListeners();
     } catch (err) {
       console.error('Failed to load questions:', err);
@@ -57,8 +58,7 @@
           categoryId: cat.id,
           categoryName: cat.name,
           questionIndex: qi,
-          text: q.text,
-          options: q.options
+          text: q.text
         });
       });
     });
@@ -66,23 +66,58 @@
     answers = new Array(totalQuestions).fill(null);
   }
 
-  // ---- Team size buttons ----
-  function setupTeamSizeOptions() {
-    const sizes = quizData.config.teamSizeOptions;
-    teamSizeContainer.innerHTML = '';
-    sizes.forEach(size => {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'option-card text-center py-3 text-sm font-medium';
-      btn.textContent = size;
-      btn.addEventListener('click', () => {
-        teamSize = size;
-        teamSizeContainer.querySelectorAll('.option-card').forEach(b => b.classList.remove('selected'));
-        btn.classList.add('selected');
-        btnStart.disabled = false;
+  // ---- Business Info (intro step) ----
+  function setupBusinessInfo() {
+    businessInfoContainer.innerHTML = '';
+
+    quizData.businessInfo.forEach(info => {
+      const group = document.createElement('div');
+      group.className = 'mb-2';
+
+      const label = document.createElement('label');
+      label.className = 'block text-sm font-medium text-slate-300 mb-3';
+      label.textContent = info.text;
+      group.appendChild(label);
+
+      // Determine options array
+      const opts = info.options.map(o => typeof o === 'string' ? o : o.text);
+      const colCount = opts.length <= 3 ? opts.length : Math.min(opts.length, 4);
+
+      const grid = document.createElement('div');
+      grid.className = `grid gap-3`;
+      grid.style.gridTemplateColumns = `repeat(${colCount}, minmax(0, 1fr))`;
+      grid.dataset.infoId = info.id;
+
+      opts.forEach((optText, i) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'option-card text-center py-3 text-sm font-medium';
+        btn.textContent = optText;
+        btn.addEventListener('click', () => {
+          grid.querySelectorAll('.option-card').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+
+          // Store answer
+          const original = info.options[i];
+          if (typeof original === 'string') {
+            businessInfoAnswers[info.id] = original;
+          } else {
+            businessInfoAnswers[info.id] = { text: original.text, score: original.score };
+          }
+
+          checkBusinessInfoComplete();
+        });
+        grid.appendChild(btn);
       });
-      teamSizeContainer.appendChild(btn);
+
+      group.appendChild(grid);
+      businessInfoContainer.appendChild(group);
     });
+  }
+
+  function checkBusinessInfoComplete() {
+    const allAnswered = quizData.businessInfo.every(info => businessInfoAnswers[info.id] !== undefined);
+    btnStart.disabled = !allAnswered;
   }
 
   // ---- Event listeners ----
@@ -101,7 +136,7 @@
       userData.company = document.getElementById('input-company').value.trim();
 
       // You could POST to a GHL webhook here:
-      // submitToGHL(userData, teamSize, computeScores());
+      // submitToGHL(userData, businessInfoAnswers, computeScores());
 
       showStep('results');
       renderResults();
@@ -110,9 +145,9 @@
     btnRetake.addEventListener('click', () => {
       currentQuestionIndex = 0;
       answers = new Array(totalQuestions).fill(null);
-      teamSize = '';
+      businessInfoAnswers = {};
       userData = { name: '', email: '', company: '' };
-      teamSizeContainer.querySelectorAll('.option-card').forEach(b => b.classList.remove('selected'));
+      businessInfoContainer.querySelectorAll('.option-card').forEach(b => b.classList.remove('selected'));
       btnStart.disabled = true;
       document.getElementById('input-name').value = '';
       document.getElementById('input-email').value = '';
@@ -128,7 +163,6 @@
     map[stepName].classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // Update nav progress text
     if (stepName === 'questions') {
       navProgress.textContent = '';
     } else if (stepName === 'email') {
@@ -152,35 +186,23 @@
 
     // Trigger animation
     questionArea.classList.remove('slide-in');
-    void questionArea.offsetWidth; // reflow
+    void questionArea.offsetWidth;
     questionArea.classList.add('slide-in');
 
-    // Render options
+    // Render Yes / No cards
     optionsContainer.innerHTML = '';
-    q.options.forEach((opt, i) => {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'option-card';
-      if (answers[currentQuestionIndex] !== null && answers[currentQuestionIndex].score === opt.score) {
-        btn.classList.add('selected');
-      }
 
-      // Add option letter
-      const letterSpan = document.createElement('span');
-      letterSpan.className = 'inline-block w-7 h-7 rounded-full bg-slate-700 text-slate-300 text-sm font-semibold text-center leading-7 mr-3 flex-shrink-0';
-      letterSpan.textContent = String.fromCharCode(65 + i);
+    const yesBtn = createYesNoButton('Yes', 10);
+    const noBtn = createYesNoButton('No', 0);
 
-      const textSpan = document.createElement('span');
-      textSpan.textContent = opt.text;
+    // Highlight if already answered
+    if (answers[currentQuestionIndex] !== null) {
+      if (answers[currentQuestionIndex] === 10) yesBtn.classList.add('selected');
+      else noBtn.classList.add('selected');
+    }
 
-      btn.appendChild(letterSpan);
-      btn.appendChild(textSpan);
-      btn.style.display = 'flex';
-      btn.style.alignItems = 'flex-start';
-
-      btn.addEventListener('click', () => selectOption(opt, i));
-      optionsContainer.appendChild(btn);
-    });
+    optionsContainer.appendChild(yesBtn);
+    optionsContainer.appendChild(noBtn);
 
     // Show/hide back button
     btnBack.classList.toggle('hidden', currentQuestionIndex === 0);
@@ -189,31 +211,41 @@
     navProgress.textContent = `${currentQuestionIndex + 1} / ${totalQuestions}`;
   }
 
-  // ---- Select option ----
-  function selectOption(option, optionIndex) {
-    const q = flatQuestions[currentQuestionIndex];
+  function createYesNoButton(label, score) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'option-card text-center py-8 text-xl font-semibold flex items-center justify-center';
 
-    answers[currentQuestionIndex] = {
-      categoryId: q.categoryId,
-      questionIndex: q.questionIndex,
-      score: option.score
-    };
+    const icon = label === 'Yes'
+      ? '<svg class="w-6 h-6 mr-2 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>'
+      : '<svg class="w-6 h-6 mr-2 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>';
+
+    btn.innerHTML = icon + label;
+
+    btn.addEventListener('click', () => selectOption(score));
+    return btn;
+  }
+
+  // ---- Select option ----
+  function selectOption(score) {
+    answers[currentQuestionIndex] = score;
 
     // Visual feedback
-    optionsContainer.querySelectorAll('.option-card').forEach(b => b.classList.remove('selected'));
-    optionsContainer.children[optionIndex].classList.add('selected');
+    const buttons = optionsContainer.querySelectorAll('.option-card');
+    buttons.forEach(b => b.classList.remove('selected'));
+    if (score === 10) buttons[0].classList.add('selected');
+    else buttons[1].classList.add('selected');
 
-    // Auto-advance after short delay
+    // Auto-advance
     setTimeout(() => {
       if (currentQuestionIndex < totalQuestions - 1) {
         currentQuestionIndex++;
         renderQuestion();
       } else {
-        // All questions answered
         progressFill.style.width = '100%';
         showStep('email');
       }
-    }, 350);
+    }, 300);
   }
 
   // ---- Go back ----
@@ -228,23 +260,20 @@
   function computeScores() {
     const scores = {};
     quizData.categories.forEach(cat => {
-      scores[cat.id] = { total: 0, count: 0 };
+      scores[cat.id] = 0;
     });
 
-    answers.forEach(a => {
-      if (a) {
-        scores[a.categoryId].total += a.score;
-        scores[a.categoryId].count++;
-      }
-    });
-
-    const result = {};
+    let qi = 0;
     quizData.categories.forEach(cat => {
-      const s = scores[cat.id];
-      result[cat.id] = s.count > 0 ? s.total / s.count : 0;
+      cat.questions.forEach(() => {
+        if (answers[qi] !== null) {
+          scores[cat.id] += answers[qi];
+        }
+        qi++;
+      });
     });
 
-    return result;
+    return scores;
   }
 
   // ---- Get result level ----
@@ -257,6 +286,7 @@
   // ---- Render results ----
   function renderResults() {
     const scores = computeScores();
+    const maxPerCategory = quizData.config.maxScorePerCategory;
 
     // User name
     const resultsName = document.getElementById('results-name');
@@ -266,8 +296,9 @@
 
     // Overall score
     const allScores = Object.values(scores);
-    const overall = allScores.reduce((a, b) => a + b, 0) / allScores.length;
-    document.getElementById('overall-score').textContent = overall.toFixed(1);
+    const overall = allScores.reduce((a, b) => a + b, 0);
+    const maxTotal = maxPerCategory * quizData.categories.length;
+    document.getElementById('overall-score').textContent = overall;
 
     // CTA
     document.getElementById('cta-link').href = quizData.config.ctaUrl;
@@ -280,11 +311,11 @@
       .map(cat => ({ ...cat, score: scores[cat.id] }))
       .sort((a, b) => a.score - b.score);
 
-    // Top weaknesses (lowest 2)
+    // Top weaknesses
     renderWeaknesses(sortedCategories);
 
     // Category cards
-    renderCategoryCards(sortedCategories, scores);
+    renderCategoryCards(scores);
   }
 
   // ---- Radar chart ----
@@ -292,8 +323,8 @@
     const ctx = document.getElementById('radar-chart').getContext('2d');
     const labels = quizData.categories.map(c => c.name);
     const data = quizData.categories.map(c => scores[c.id]);
+    const max = quizData.config.maxScorePerCategory;
 
-    // Destroy existing chart if retaking
     if (window._diagnosticChart) {
       window._diagnosticChart.destroy();
     }
@@ -321,9 +352,9 @@
           r: {
             beginAtZero: true,
             min: 0,
-            max: 4,
+            max: max,
             ticks: {
-              stepSize: 1,
+              stepSize: 10,
               color: '#64748b',
               backdropColor: 'transparent',
               font: { size: 11 }
@@ -351,7 +382,7 @@
             padding: 12,
             callbacks: {
               label: function (context) {
-                return `Score: ${context.parsed.r.toFixed(1)} / 4.0`;
+                return `Score: ${context.parsed.r} / ${max}`;
               }
             }
           }
@@ -365,7 +396,7 @@
     const list = document.getElementById('weaknesses-list');
     list.innerHTML = '';
 
-    const weaknesses = sorted.filter(c => c.score < 3).slice(0, 2);
+    const weaknesses = sorted.filter(c => c.score <= 20).slice(0, 2);
 
     if (weaknesses.length === 0) {
       document.getElementById('weaknesses-section').style.display = 'none';
@@ -385,7 +416,7 @@
           <span class="text-2xl">${cat.icon}</span>
           <div>
             <h4 class="font-bold text-amber-400">${cat.name}: ${result.title}</h4>
-            <p class="text-sm text-slate-300 mt-1">${result.description}</p>
+            <p class="text-sm text-slate-300 mt-1">${result.description.split('\n')[0]}</p>
           </div>
         </div>
       `;
@@ -394,32 +425,34 @@
   }
 
   // ---- Render category cards ----
-  function renderCategoryCards(sortedCategories, scores) {
+  function renderCategoryCards(scores) {
     const container = document.getElementById('results-cards');
     container.innerHTML = '';
+    const max = quizData.config.maxScorePerCategory;
 
-    // Re-sort by original order for display
-    const orderedCategories = quizData.categories.map(cat => ({
-      ...cat,
-      score: scores[cat.id]
-    }));
-
-    orderedCategories.forEach(cat => {
-      const score = cat.score;
+    quizData.categories.forEach(cat => {
+      const score = scores[cat.id];
       const level = getResultLevel(cat, score);
       const result = cat.results[level];
 
       let colorClass, badgeClass;
-      if (score < 2) {
+      if (score <= 20) {
         colorClass = 'result-red';
         badgeClass = 'badge-red';
-      } else if (score < 3) {
+      } else if (score <= 40) {
         colorClass = 'result-amber';
         badgeClass = 'badge-amber';
       } else {
         colorClass = 'result-green';
         badgeClass = 'badge-green';
       }
+
+      // Format description into paragraphs
+      const descParagraphs = result.description
+        .split('\n')
+        .filter(p => p.trim())
+        .map(p => `<p class="mb-2">${p.trim()}</p>`)
+        .join('');
 
       const card = document.createElement('div');
       card.className = `result-card ${colorClass}`;
@@ -432,17 +465,9 @@
               <span class="text-sm text-slate-400">${result.title}</span>
             </div>
           </div>
-          <div class="score-badge ${badgeClass}">${score.toFixed(1)}</div>
+          <div class="score-badge ${badgeClass}">${score}</div>
         </div>
-        <p class="text-slate-300 text-sm mb-4">${result.description}</p>
-        <div class="space-y-2">
-          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Actionable Tips</p>
-          ${result.tips.map(tip => `
-            <div class="tip-item">
-              <span class="text-sm text-slate-300">${tip}</span>
-            </div>
-          `).join('')}
-        </div>
+        <div class="text-slate-300 text-sm">${descParagraphs}</div>
       `;
       container.appendChild(card);
     });
@@ -451,14 +476,17 @@
   // ---- GHL webhook placeholder ----
   // Uncomment and configure to send data to Go High Level
   /*
-  function submitToGHL(user, teamSize, scores) {
+  function submitToGHL(user, businessInfo, scores) {
     const payload = {
       name: user.name,
       email: user.email,
       company: user.company,
-      teamSize: teamSize,
+      teamSize: businessInfo['team-size'],
+      workLocation: businessInfo['work-location'],
+      yearsRunning: businessInfo['years-running'],
+      revenue: businessInfo['revenue'],
       scores: scores,
-      overallScore: Object.values(scores).reduce((a, b) => a + b, 0) / Object.values(scores).length,
+      overallScore: Object.values(scores).reduce((a, b) => a + b, 0),
       completedAt: new Date().toISOString()
     };
 

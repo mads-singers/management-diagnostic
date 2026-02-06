@@ -25,7 +25,7 @@
   <main class="pt-20 pb-16 min-h-screen">
     <div class="max-w-3xl mx-auto px-6">
 
-      <!-- ========== STEP 1: INTRO ========== -->
+      <!-- ========== STEP 1: INTRO (Business Info) ========== -->
       <section id="step-intro" class="step active">
         <div class="text-center py-12">
           <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 text-cyan-400 text-sm font-medium mb-8">
@@ -38,14 +38,12 @@
           </h1>
 
           <p class="text-lg text-slate-300 max-w-xl mx-auto mb-10">
-            Answer 12 quick questions to get a personalized scorecard showing your management strengths and blind spots — with actionable tips to improve.
+            Answer 20 quick questions to get a personalized scorecard showing your management strengths and blind spots.
           </p>
 
-          <div class="max-w-sm mx-auto mb-10">
-            <label class="block text-sm font-medium text-slate-300 mb-3 text-left">How many people do you manage?</label>
-            <div class="grid grid-cols-2 gap-3" id="team-size-options">
-              <!-- Populated by JS -->
-            </div>
+          <!-- Business Info Questions (populated by JS) -->
+          <div class="max-w-md mx-auto space-y-6 mb-10 text-left" id="business-info-container">
+            <!-- Populated by JS -->
           </div>
 
           <button id="btn-start" class="btn-primary text-lg" disabled>
@@ -62,8 +60,8 @@
         <!-- Progress bar -->
         <div class="mb-8">
           <div class="flex items-center justify-between mb-2">
-            <span class="text-sm text-slate-400" id="question-counter">Question 1 of 12</span>
-            <span class="text-sm text-slate-400" id="category-label">Delegation</span>
+            <span class="text-sm text-slate-400" id="question-counter">Question 1 of 20</span>
+            <span class="text-sm text-slate-400" id="category-label">Team Management</span>
           </div>
           <div class="progress-bar-container">
             <div class="progress-bar-fill" id="progress-fill" style="width: 0%"></div>
@@ -72,9 +70,9 @@
 
         <!-- Question area -->
         <div id="question-area" class="slide-in">
-          <h2 class="text-2xl md:text-3xl font-bold mb-8" id="question-text"></h2>
-          <div class="space-y-3" id="options-container">
-            <!-- Options populated by JS -->
+          <h2 class="text-2xl md:text-3xl font-bold mb-10" id="question-text"></h2>
+          <div class="grid grid-cols-2 gap-4" id="options-container">
+            <!-- Yes / No buttons populated by JS -->
           </div>
         </div>
 
@@ -136,8 +134,8 @@
         <div class="text-center mb-10">
           <div class="inline-flex items-center gap-4 px-8 py-4 rounded-2xl bg-slate-800/50 border border-slate-700">
             <span class="text-slate-300 text-lg">Overall Score</span>
-            <span class="text-4xl font-extrabold gradient-text" id="overall-score">0.0</span>
-            <span class="text-slate-500 text-lg">/ 4.0</span>
+            <span class="text-4xl font-extrabold gradient-text" id="overall-score">0</span>
+            <span class="text-slate-500 text-lg">/ 200</span>
           </div>
         </div>
 
