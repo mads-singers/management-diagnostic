@@ -1,0 +1,355 @@
+{
+  "categories": [
+    {
+      "id": "delegation",
+      "name": "Delegation",
+      "icon": "👥",
+      "questions": [
+        {
+          "text": "A key project is coming up that you know well. How do you approach it?",
+          "options": [
+            { "text": "I handle most of it myself — it's faster and I know it'll be done right", "score": 1 },
+            { "text": "I assign tasks but check in constantly to make sure nothing goes off track", "score": 2 },
+            { "text": "I brief someone capable on the outcome I need and schedule a mid-point check-in", "score": 3 },
+            { "text": "I hand it to the best person, agree on milestones, and let them own the approach entirely", "score": 4 }
+          ]
+        },
+        {
+          "text": "One of your team members delivers work that's 'good enough' but not how you'd do it. What happens next?",
+          "options": [
+            { "text": "I redo it myself — the quality needs to match my standard", "score": 1 },
+            { "text": "I give detailed corrections and ask them to redo it my way", "score": 2 },
+            { "text": "If it meets the objective, I accept it and note the style difference for future coaching", "score": 3 },
+            { "text": "I acknowledge their approach, discuss what 'great' looks like, and trust them to improve over time", "score": 4 }
+          ]
+        }
+      ],
+      "results": {
+        "low": {
+          "range": [1, 2],
+          "title": "The Bottleneck",
+          "description": "You're likely doing too much yourself. Your team can't grow if you hold onto everything, and you're burning out in the process. This is the most common trap for talented managers.",
+          "tips": [
+            "Pick one recurring task you do weekly and fully delegate it this week — resist the urge to take it back",
+            "Ask yourself: 'Am I the only person who can do this?' If not, delegate it",
+            "Accept that 80% done by someone else is better than 100% done by you at the cost of your strategic time"
+          ]
+        },
+        "mid": {
+          "range": [2, 3],
+          "title": "The Hoverer",
+          "description": "You delegate tasks but struggle to let go of control. Your team gets assignments but also gets the feeling you don't fully trust them. This limits their ownership and growth.",
+          "tips": [
+            "Set clear outcomes upfront instead of prescribing the method — focus on the 'what', not the 'how'",
+            "Replace constant check-ins with agreed milestones — let them come to you",
+            "When you feel the urge to jump in, write down your concern instead and discuss it at the next scheduled check-in"
+          ]
+        },
+        "high": {
+          "range": [3, 4],
+          "title": "The Multiplier",
+          "description": "You understand that delegation is about developing people, not just offloading tasks. You trust your team with ownership and focus your energy on strategy and coaching.",
+          "tips": [
+            "Continue raising the bar — delegate more complex, strategic work to stretch your top performers",
+            "Document your delegation framework so other managers on your team can replicate it",
+            "Identify your next successor for key responsibilities to build deeper bench strength"
+          ]
+        }
+      }
+    },
+    {
+      "id": "one-on-ones",
+      "name": "1-on-1 Meetings",
+      "icon": "🗣️",
+      "questions": [
+        {
+          "text": "How do your 1-on-1 meetings with direct reports typically go?",
+          "options": [
+            { "text": "I don't really do regular 1-on-1s — we talk when something comes up", "score": 1 },
+            { "text": "We meet occasionally, but it's mostly me giving updates or assigning work", "score": 2 },
+            { "text": "We meet regularly with a loose agenda — a mix of status updates and personal check-ins", "score": 3 },
+            { "text": "We meet weekly with a shared agenda they own — focused on their growth, blockers, and priorities", "score": 4 }
+          ]
+        },
+        {
+          "text": "A usually strong team member seems disengaged lately. What do you do?",
+          "options": [
+            { "text": "I wait and see if it resolves itself — I don't want to pry", "score": 1 },
+            { "text": "I mention it casually in passing and hope they open up", "score": 2 },
+            { "text": "I bring it up directly in our next 1-on-1 and ask how they're doing", "score": 3 },
+            { "text": "I create a safe space in our 1-on-1 to explore what's changed — listening first, then problem-solving together", "score": 4 }
+          ]
+        }
+      ],
+      "results": {
+        "low": {
+          "range": [1, 2],
+          "title": "Flying Blind",
+          "description": "Without regular 1-on-1s, you're missing critical signals from your team. Problems fester, people feel unseen, and you'll be surprised by resignations and performance issues.",
+          "tips": [
+            "Block 30 minutes weekly with each direct report starting this week — make it non-negotiable",
+            "Start simple: ask 'What's going well? What's blocking you? How can I help?'",
+            "Make the meeting about them, not you — resist the urge to use it as a status update"
+          ]
+        },
+        "mid": {
+          "range": [2, 3],
+          "title": "Surface Level",
+          "description": "You meet with your team but aren't getting the full value from 1-on-1s. The conversations stay safe and transactional. There's an opportunity to build much deeper trust and insight.",
+          "tips": [
+            "Let your direct report set the agenda — send a shared doc 24 hours before and let them fill it first",
+            "Spend at least half the meeting on their development, not task updates",
+            "Ask better questions: 'What would you do differently if you were in my role?' or 'What's one thing I could do to better support you?'"
+          ]
+        },
+        "high": {
+          "range": [3, 4],
+          "title": "Connected Leader",
+          "description": "Your 1-on-1s are a real leadership tool. You build trust, surface issues early, and invest in your people's growth. This is what separates good managers from great ones.",
+          "tips": [
+            "Challenge yourself to have one 'courageous conversation' per month that pushes both of you to grow",
+            "Track themes across your 1-on-1s — patterns reveal systemic issues worth addressing",
+            "Share your own challenges and growth areas to model vulnerability and deepen trust"
+          ]
+        }
+      }
+    },
+    {
+      "id": "time-priorities",
+      "name": "Time & Priorities",
+      "icon": "⏱️",
+      "questions": [
+        {
+          "text": "It's Monday morning. How does your week typically start?",
+          "options": [
+            { "text": "I jump straight into emails and Slack — the day runs me", "score": 1 },
+            { "text": "I have a rough idea of priorities but get pulled into reactive work by noon", "score": 2 },
+            { "text": "I review my top 3 priorities and block time for them, but I sometimes let meetings creep in", "score": 3 },
+            { "text": "I've pre-planned my week — my top priorities have protected time blocks, and I've already said no to non-essential meetings", "score": 4 }
+          ]
+        },
+        {
+          "text": "Your calendar is full but a senior leader asks you to take on an 'urgent' project. What do you do?",
+          "options": [
+            { "text": "I say yes immediately and figure out how to squeeze it in — I can't say no to leadership", "score": 1 },
+            { "text": "I say yes but quietly stress about how I'll get everything done", "score": 2 },
+            { "text": "I ask what the deadline is and try to negotiate the timing to fit my schedule", "score": 3 },
+            { "text": "I share my current priorities and ask them to help me decide what to deprioritize to make room", "score": 4 }
+          ]
+        }
+      ],
+      "results": {
+        "low": {
+          "range": [1, 2],
+          "title": "The Firefighter",
+          "description": "You're constantly reacting instead of leading. Your days are consumed by other people's priorities, and your most important work keeps getting pushed to 'someday'. This is unsustainable.",
+          "tips": [
+            "Identify your top 3 priorities each week and schedule them as meetings with yourself — treat them as non-negotiable",
+            "Audit your calendar: cancel or delegate any recurring meeting where you're not essential",
+            "Practice saying 'Let me check my priorities and get back to you' instead of automatic yes"
+          ]
+        },
+        "mid": {
+          "range": [2, 3],
+          "title": "The Juggler",
+          "description": "You know what matters but struggle to protect your time for it. You start with good intentions but get pulled off course. The gap between your plan and your reality is where your impact leaks.",
+          "tips": [
+            "Use time-blocking: schedule your most important work during your peak energy hours and guard those blocks fiercely",
+            "Create a 'not-doing' list — things you're intentionally saying no to this quarter",
+            "Batch reactive work (email, Slack) into 2-3 windows per day instead of constant monitoring"
+          ]
+        },
+        "high": {
+          "range": [3, 4],
+          "title": "The Strategist",
+          "description": "You control your time instead of letting it control you. You're intentional about where you spend energy and comfortable pushing back on demands that don't align with your priorities.",
+          "tips": [
+            "Teach your team your prioritization framework so they can self-serve instead of escalating",
+            "Schedule quarterly 'strategic thinking' blocks — unstructured time for your biggest challenges",
+            "Regularly audit: are your time investments aligned with your highest-leverage activities?"
+          ]
+        }
+      }
+    },
+    {
+      "id": "hiring",
+      "name": "Hiring & Team Building",
+      "icon": "🏗️",
+      "questions": [
+        {
+          "text": "You need to fill a role on your team. How do you approach hiring?",
+          "options": [
+            { "text": "I post the job and hope for good candidates — hiring is mostly luck", "score": 1 },
+            { "text": "I write a job description based on the last person's role and interview whoever HR sends me", "score": 2 },
+            { "text": "I define the key outcomes for the role, create structured interviews, and evaluate candidates against those criteria", "score": 3 },
+            { "text": "I'm always building a pipeline — I know what roles I'll need, network proactively, and have a rigorous process that tests for both skills and values fit", "score": 4 }
+          ]
+        },
+        {
+          "text": "You realize a team member is consistently underperforming. How do you handle it?",
+          "options": [
+            { "text": "I avoid the conversation — it's uncomfortable and maybe they'll improve on their own", "score": 1 },
+            { "text": "I hint at the issues and hope they pick up on it, or wait for the annual review", "score": 2 },
+            { "text": "I have a direct conversation about the gap, set clear expectations, and give them a defined period to improve", "score": 3 },
+            { "text": "I address it early with specifics, co-create an improvement plan, provide support — but also prepare to make a change if needed", "score": 4 }
+          ]
+        }
+      ],
+      "results": {
+        "low": {
+          "range": [1, 2],
+          "title": "Reactive Recruiter",
+          "description": "Hiring feels like an emergency every time a role opens, and underperformers linger too long. Both drain your team's energy and results. The cost of a bad hire — or a slow fire — is massive.",
+          "tips": [
+            "Before posting any role, write down the 3 outcomes this person must deliver in their first 6 months",
+            "Create a simple scorecard for interviews so you evaluate all candidates against the same criteria",
+            "For underperformers: have the conversation this week. Waiting never makes it easier"
+          ]
+        },
+        "mid": {
+          "range": [2, 3],
+          "title": "Process Builder",
+          "description": "You have some hiring structure but it's inconsistent. You address performance issues eventually, but often later than you should. Tightening both processes will dramatically improve your team quality.",
+          "tips": [
+            "Implement a structured interview process: consistent questions, scoring rubric, multiple interviewers",
+            "Address performance gaps within 2 weeks of noticing them — not 2 months",
+            "After every hire, do a 90-day retrospective: did the process predict their actual performance?"
+          ]
+        },
+        "high": {
+          "range": [3, 4],
+          "title": "Talent Architect",
+          "description": "You treat team composition as a strategic advantage. You hire deliberately, manage performance proactively, and aren't afraid to make tough calls for the good of the team.",
+          "tips": [
+            "Build a talent map: who are your flight risks, who needs development, who's ready for promotion?",
+            "Create a referral engine — your best hires come from your team's networks",
+            "Develop a 'manager training' program so your strong performers can step into leadership"
+          ]
+        }
+      }
+    },
+    {
+      "id": "feedback",
+      "name": "Feedback & Communication",
+      "icon": "💬",
+      "questions": [
+        {
+          "text": "A team member made a mistake on a client deliverable. How do you handle it?",
+          "options": [
+            { "text": "I fix it myself and don't mention it — I don't want to create conflict", "score": 1 },
+            { "text": "I send a message about quality standards to the whole team — without calling anyone out specifically", "score": 2 },
+            { "text": "I talk to them directly, explain what went wrong, and discuss how to prevent it next time", "score": 3 },
+            { "text": "I address it promptly and privately, ask for their perspective first, then collaborate on a specific plan to improve the process", "score": 4 }
+          ]
+        },
+        {
+          "text": "When was the last time you gave someone positive recognition for their work?",
+          "options": [
+            { "text": "I can't remember — if they're doing their job, that's what they're paid for", "score": 1 },
+            { "text": "I say 'good job' occasionally but don't get specific", "score": 2 },
+            { "text": "I try to acknowledge good work regularly and tie it to the impact it had", "score": 3 },
+            { "text": "I have a habit of recognizing contributions publicly and privately, being specific about what they did and why it mattered", "score": 4 }
+          ]
+        }
+      ],
+      "results": {
+        "low": {
+          "range": [1, 2],
+          "title": "The Silent Manager",
+          "description": "Your team is operating without a feedback loop. They don't know where they stand, what 'great' looks like, or whether their work matters. This kills motivation and growth.",
+          "tips": [
+            "Give one piece of specific positive feedback and one piece of constructive feedback this week",
+            "Use the SBI model: Situation, Behavior, Impact — it removes emotion and keeps feedback factual",
+            "Remember: avoiding feedback isn't kindness, it's avoidance. Your team deserves to know where they stand"
+          ]
+        },
+        "mid": {
+          "range": [2, 3],
+          "title": "The Broadcaster",
+          "description": "You communicate but without enough precision or consistency. Your feedback might be too vague to be actionable, or you give it too infrequently for it to drive change.",
+          "tips": [
+            "Make feedback immediate: address things within 24 hours while context is fresh",
+            "Be specific: replace 'great job' with 'the way you handled that client objection was excellent because...'",
+            "Schedule a monthly 'feedback pulse' where you proactively share observations on each team member's growth"
+          ]
+        },
+        "high": {
+          "range": [3, 4],
+          "title": "The Coach",
+          "description": "You create a culture where feedback flows naturally in both directions. People on your team know exactly where they stand and feel safe bringing issues to you.",
+          "tips": [
+            "Ask for upward feedback regularly: 'What's one thing I could do differently as your manager?'",
+            "Help your team give feedback to each other — build a culture, not just a personal practice",
+            "Document growth conversations so you can show people their progress over time"
+          ]
+        }
+      }
+    },
+    {
+      "id": "goals",
+      "name": "Goal Setting & Accountability",
+      "icon": "🎯",
+      "questions": [
+        {
+          "text": "How does your team know what they should be focused on this quarter?",
+          "options": [
+            { "text": "They mostly figure it out themselves based on what comes in — I trust them to know their job", "score": 1 },
+            { "text": "I share company goals and hope they connect the dots to their own work", "score": 2 },
+            { "text": "We set team goals together at the start of each quarter and review them occasionally", "score": 3 },
+            { "text": "Each person has clear, measurable goals tied to team objectives — we review progress weekly and adjust as needed", "score": 4 }
+          ]
+        },
+        {
+          "text": "A team member consistently misses deadlines but does good work when they deliver. What do you do?",
+          "options": [
+            { "text": "I just adjust timelines in my head — their work is good, so I work around it", "score": 1 },
+            { "text": "I express frustration when it happens but don't follow up with a structured conversation", "score": 2 },
+            { "text": "I have a conversation about the pattern and ask what's causing it", "score": 3 },
+            { "text": "I address the pattern directly, help them identify root causes, set specific commitments, and follow up consistently until the habit changes", "score": 4 }
+          ]
+        }
+      ],
+      "results": {
+        "low": {
+          "range": [1, 2],
+          "title": "The Hope Manager",
+          "description": "You're managing by hope instead of by design. Without clear goals and accountability, your team drifts, priorities conflict, and results become unpredictable.",
+          "tips": [
+            "Set 3-5 measurable goals for your team this quarter — make them visible and specific",
+            "Create a simple weekly check-in ritual: 'What did you commit to? What did you deliver? What's next?'",
+            "Remember: accountability isn't micromanagement. People actually want clarity about what success looks like"
+          ]
+        },
+        "mid": {
+          "range": [2, 3],
+          "title": "The Goal Setter",
+          "description": "You set goals but struggle with the follow-through. Goals get set at the start of the quarter and reviewed at the end — with a gap in between where accountability fades.",
+          "tips": [
+            "Make goals visible: put them on a shared dashboard or document that the team sees weekly",
+            "Hold a 15-minute weekly stand-up focused solely on progress against key goals",
+            "When someone misses a commitment, address it immediately — not at the end of the quarter"
+          ]
+        },
+        "high": {
+          "range": [3, 4],
+          "title": "The Accountability Partner",
+          "description": "You combine clear expectations with consistent follow-through. Your team knows what matters, how they're tracking, and that commitments mean something.",
+          "tips": [
+            "Evolve from goals to OKRs or a similar framework that connects individual work to company strategy",
+            "Empower your team to hold each other accountable — not just relying on you",
+            "Celebrate progress, not just completion — recognize the behaviors that drive results"
+          ]
+        }
+      }
+    }
+  ],
+  "config": {
+    "title": "Management Diagnostic",
+    "subtitle": "Discover your management strengths and blind spots in 5 minutes",
+    "brand": "Mads Singers Management",
+    "ctaText": "Want to go deeper? Book a free strategy call",
+    "ctaUrl": "#",
+    "emailPlaceholder": "We'll send you a copy of your results and actionable resources",
+    "teamSizeOptions": ["1-5", "6-15", "16-50", "50+"]
+  }
+}

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Management Diagnostic | Mads Singers Management</title>
+  <meta name="description" content="Take the free 5-minute management diagnostic and discover your strengths and blind spots as a manager.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="min-h-screen">
+
+  <!-- Navigation -->
+  <nav class="nav-container fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="text-lg font-bold gradient-text">Mads Singers</a>
+      <span class="text-sm text-slate-400" id="nav-progress"></span>
+    </div>
+  </nav>
+
+  <!-- Main content area -->
+  <main class="pt-20 pb-16 min-h-screen">
+    <div class="max-w-3xl mx-auto px-6">
+
+      <!-- ========== STEP 1: INTRO ========== -->
+      <section id="step-intro" class="step active">
+        <div class="text-center py-12">
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 text-cyan-400 text-sm font-medium mb-8">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            Free &middot; 5 minutes &middot; Instant results
+          </div>
+
+          <h1 class="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
+            Discover Your<br><span class="gradient-text">Management Style</span>
+          </h1>
+
+          <p class="text-lg text-slate-300 max-w-xl mx-auto mb-10">
+            Answer 12 quick questions to get a personalized scorecard showing your management strengths and blind spots — with actionable tips to improve.
+          </p>
+
+          <div class="max-w-sm mx-auto mb-10">
+            <label class="block text-sm font-medium text-slate-300 mb-3 text-left">How many people do you manage?</label>
+            <div class="grid grid-cols-2 gap-3" id="team-size-options">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <button id="btn-start" class="btn-primary text-lg" disabled>
+            Start Diagnostic
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+          </button>
+
+          <p class="text-sm text-slate-500 mt-6">No account required. Your answers are private.</p>
+        </div>
+      </section>
+
+      <!-- ========== STEP 2: QUESTIONS ========== -->
+      <section id="step-questions" class="step">
+        <!-- Progress bar -->
+        <div class="mb-8">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-sm text-slate-400" id="question-counter">Question 1 of 12</span>
+            <span class="text-sm text-slate-400" id="category-label">Delegation</span>
+          </div>
+          <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="progress-fill" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <!-- Question area -->
+        <div id="question-area" class="slide-in">
+          <h2 class="text-2xl md:text-3xl font-bold mb-8" id="question-text"></h2>
+          <div class="space-y-3" id="options-container">
+            <!-- Options populated by JS -->
+          </div>
+        </div>
+
+        <!-- Back button -->
+        <div class="mt-8 flex items-center">
+          <button id="btn-back" class="btn-secondary text-sm hidden">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12"></path></svg>
+            Back
+          </button>
+        </div>
+      </section>
+
+      <!-- ========== STEP 3: EMAIL CAPTURE ========== -->
+      <section id="step-email" class="step">
+        <div class="text-center py-8">
+          <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-cyan-500/10 mb-6">
+            <svg class="w-8 h-8 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          </div>
+
+          <h2 class="text-3xl md:text-4xl font-extrabold mb-4">Your Scorecard is Ready!</h2>
+          <p class="text-lg text-slate-300 mb-10">Enter your details below to see your personalized management scorecard.</p>
+
+          <div class="max-w-md mx-auto">
+            <!-- GHL Form Embed Spot: Replace this form with your Go High Level form embed code,
+                 or configure the action URL below to post to your GHL webhook -->
+            <form id="email-form" class="space-y-4 text-left">
+              <div>
+                <label class="block text-sm font-medium text-slate-300 mb-1.5">First Name *</label>
+                <input type="text" id="input-name" class="form-input" placeholder="Your first name" required>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-slate-300 mb-1.5">Email Address *</label>
+                <input type="email" id="input-email" class="form-input" placeholder="you@company.com" required>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-slate-300 mb-1.5">Company <span class="text-slate-500">(optional)</span></label>
+                <input type="text" id="input-company" class="form-input" placeholder="Your company name">
+              </div>
+
+              <button type="submit" class="btn-primary w-full mt-6">
+                See My Results
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+              </button>
+            </form>
+
+            <p class="text-xs text-slate-500 mt-4" id="email-disclaimer">We'll send you a copy of your results and actionable resources.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== STEP 4: RESULTS ========== -->
+      <section id="step-results" class="step">
+        <div class="text-center mb-10">
+          <h2 class="text-3xl md:text-4xl font-extrabold mb-2">Your Management Scorecard</h2>
+          <p class="text-slate-400" id="results-name">Here are your results</p>
+        </div>
+
+        <!-- Overall score -->
+        <div class="text-center mb-10">
+          <div class="inline-flex items-center gap-4 px-8 py-4 rounded-2xl bg-slate-800/50 border border-slate-700">
+            <span class="text-slate-300 text-lg">Overall Score</span>
+            <span class="text-4xl font-extrabold gradient-text" id="overall-score">0.0</span>
+            <span class="text-slate-500 text-lg">/ 4.0</span>
+          </div>
+        </div>
+
+        <!-- Radar chart -->
+        <div class="card mb-10 p-6 md:p-8">
+          <div class="chart-container">
+            <canvas id="radar-chart"></canvas>
+          </div>
+        </div>
+
+        <!-- Top weaknesses callout -->
+        <div id="weaknesses-section" class="mb-10">
+          <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+            <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.268 16.5c-.77.833.192 2.5 1.732 2.5z"></path></svg>
+            Focus Areas
+          </h3>
+          <div class="space-y-3" id="weaknesses-list">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Category cards -->
+        <div class="space-y-4 mb-12" id="results-cards">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- CTA -->
+        <div class="card text-center p-8 md:p-10" id="cta-section">
+          <h3 class="text-2xl font-bold mb-3">Want to Go Deeper?</h3>
+          <p class="text-slate-300 mb-6">Get personalized coaching to turn your blind spots into strengths.</p>
+          <a href="#" id="cta-link" class="btn-primary">
+            Book a Free Strategy Call
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+          </a>
+        </div>
+
+        <!-- Retake -->
+        <div class="text-center mt-8">
+          <button id="btn-retake" class="btn-secondary">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+            Retake Diagnostic
+          </button>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800 py-6">
+    <div class="max-w-5xl mx-auto px-6 text-center text-sm text-slate-500">
+      &copy; 2025 Mads Singers Management. All rights reserved.
+    </div>
+  </footer>
+
+  <script src="js/diagnostic.js"></script>
+</body>
+</html>
