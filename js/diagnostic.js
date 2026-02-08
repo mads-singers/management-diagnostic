@@ -336,13 +336,13 @@
         datasets: [{
           label: 'Your Score',
           data: data,
-          backgroundColor: 'rgba(6, 182, 212, 0.15)',
-          borderColor: '#06b6d4',
-          borderWidth: 2,
-          pointBackgroundColor: '#06b6d4',
-          pointBorderColor: '#06b6d4',
-          pointRadius: 5,
-          pointHoverRadius: 7
+          backgroundColor: 'rgba(255, 255, 255, 0.06)',
+          borderColor: '#ffffff',
+          borderWidth: 1.5,
+          pointBackgroundColor: '#ffffff',
+          pointBorderColor: '#ffffff',
+          pointRadius: 4,
+          pointHoverRadius: 6
         }]
       },
       options: {
@@ -355,31 +355,31 @@
             max: max,
             ticks: {
               stepSize: 10,
-              color: '#64748b',
+              color: '#7a8ba0',
               backdropColor: 'transparent',
-              font: { size: 11 }
+              font: { size: 10 }
             },
             grid: {
-              color: 'rgba(51, 65, 85, 0.5)'
+              color: 'rgba(255, 255, 255, 0.08)'
             },
             angleLines: {
-              color: 'rgba(51, 65, 85, 0.5)'
+              color: 'rgba(255, 255, 255, 0.08)'
             },
             pointLabels: {
               color: '#e2e8f0',
-              font: { size: 13, weight: '600' }
+              font: { size: 12, weight: '500' }
             }
           }
         },
         plugins: {
           legend: { display: false },
           tooltip: {
-            backgroundColor: '#1e293b',
-            titleColor: '#f8fafc',
-            bodyColor: '#94a3b8',
-            borderColor: '#334155',
+            backgroundColor: '#112240',
+            titleColor: '#ffffff',
+            bodyColor: '#7a8ba0',
+            borderColor: '#1e3a5f',
             borderWidth: 1,
-            padding: 12,
+            padding: 10,
             callbacks: {
               label: function (context) {
                 return `Score: ${context.parsed.r} / ${max}`;
